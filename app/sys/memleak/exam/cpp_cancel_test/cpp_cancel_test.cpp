@@ -1,4 +1,4 @@
-#include <GMemLeak>
+#include <GMem>
 
 void first_test()
 {
@@ -6,14 +6,14 @@ void first_test()
   delete[] new int[256];
 }
 
-#include <GMemLeakCancel>
+#include <GMemCancel>
 void cancel_test()
 {
   delete new int;
   delete[] new int[256];
 }
 
-#include <GMemLeak>
+#include <GMem>
 void second_test()
 {
   delete new int;

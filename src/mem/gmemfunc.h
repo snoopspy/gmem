@@ -19,10 +19,10 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // function for c
 // ----------------------------------------------------------------------------
-void* gmemleak_malloc (              size_t size, const char* file, const int line);
-void* gmemleak_calloc (size_t nmemb, size_t size, const char* file, const int line);
-void* gmemleak_realloc(void *ptr,    size_t size, const char* file, const int line);
-void  gmemleak_free   (void *ptr,                 const char* file, const int line);
+void* gmem_malloc (              size_t size, const char* file, const int line);
+void* gmem_calloc (size_t nmemb, size_t size, const char* file, const int line);
+void* gmem_realloc(void *ptr,    size_t size, const char* file, const int line);
+void  gmem_free   (void *ptr,                 const char* file, const int line);
 
 #ifdef __cplusplus
 }

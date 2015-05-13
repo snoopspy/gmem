@@ -1,4 +1,4 @@
-#include <GMemLeak>
+#include <GMem>
 
 void new_test() {
   int* p = new int;

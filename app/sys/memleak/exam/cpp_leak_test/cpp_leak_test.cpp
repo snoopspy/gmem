@@ -1,18 +1,18 @@
-#include <GMemLeak>
-#include <GMemLeakMgr>
+#include <GMem>
+#include <GMemMgr>
 
 void new_test()
 {
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   new int;
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 }
 
 void new_arr_test()
 {
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   new int[256];
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 }
 
 int main()

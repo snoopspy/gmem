@@ -8,26 +8,28 @@
 //
 // ----------------------------------------------------------------------------
 
-#pragma once
+// ----------------------------------------------------------------------------
+// macro for c
+// ----------------------------------------------------------------------------
+#include "gmemfunc.h"
 
-#include <stddef.h> // size_t
+#undef  malloc
+#define malloc(SIZE)        gmem_malloc ((SIZE),          __FILE__, __LINE__)
+#undef  calloc
+#define calloc(NMEMB, SIZE) gmem_calloc ((NMEMB), (SIZE), __FILE__, __LINE__)
+#undef  realloc
+#define realloc(PTR, SIZE)  gmem_realloc((PTR), (SIZE),   __FILE__, __LINE__)
+#undef  free
+#define free(PTR)           gmem_free   ((PTR),           __FILE__, __LINE__)
 
+// ----------------------------------------------------------------------------
+// macro for cpp
+// ----------------------------------------------------------------------------
 #ifdef __cplusplus
-extern "C" {
-#endif
 
-// ----------------------------------------------------------------------------
-// export function
-// ----------------------------------------------------------------------------
-void gmemleak_mgr_start(void);
-void gmemleak_mgr_stop(void);
+#undef  gmem_new
+#define gmem_new new(__FILE__, __LINE__)
+#undef  new
+#define new gmem_new
 
-// ----------------------------------------------------------------------------
-// used internally
-// ----------------------------------------------------------------------------
-void* gmemleak_mgr_add(void* ptr, size_t size, const char* file, const int line);
-void  gmemleak_mgr_del(void* ptr);
-
-#ifdef __cplusplus
-}
-#endif
+#endif // __cplusplus

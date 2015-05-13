@@ -1,3 +1,3 @@
 CONFIG -= qt
-include(../../../../../g.pri)
+include(../../../../../gmem.pri)
 SOURCES  += *.cpp

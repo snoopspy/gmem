@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include <GMemLeak>
-#include <GMemLeakMgr>
+#include <GMem>
+#include <GMemMgr>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-result"
@@ -8,31 +8,31 @@
 
 void malloc_test()
 {
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   malloc(256);
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 }
 
 void calloc_test()
 {
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   calloc(4, 256);
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 }
 
 void realloc_test()
 {
   void *p;
 
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   p = malloc(4);
   realloc(p, 4);
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 
-  gmemleak_mgr_start();
+  gmem_mgr_start();
   p = malloc(4);
   realloc(p, 400000);
-  gmemleak_mgr_stop();
+  gmem_mgr_stop();
 }
 
 int main()

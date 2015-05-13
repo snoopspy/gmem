@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <GMemLeak>
+#include <GMem>
 
 void first_test()
 {
@@ -18,7 +18,7 @@ void first_test()
   free(p);
 }
 
-#include <GMemLeakCancel>
+#include <GMemCancel>
 void cancel_test()
 {
   void *p = malloc(4);
@@ -36,7 +36,7 @@ void cancel_test()
   free(p);
 }
 
-#include <GMemLeak>
+#include <GMem>
 void second_test()
 {
   void *p = malloc(4);
