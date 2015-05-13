@@ -12,11 +12,11 @@ typedef std::map<void*, gmemmgr_item_t> gmemmgr_t;
 
 static gmemmgr_t _gmemmgr;
 
-extern "C" void gmemmgr_start(void) {
+void gmemmgr_start(void) {
   _gmemmgr.clear();
 }
 
-extern "C" void gmemmgr_stop(void) {
+void gmemmgr_stop(void) {
   if (_gmemmgr.size() <= 0) return;
   fprintf(stderr, "******************************************************************************\n");
   for (gmemmgr_t::iterator it = _gmemmgr.begin(); it != _gmemmgr.end(); it++) {
@@ -27,7 +27,7 @@ extern "C" void gmemmgr_stop(void) {
   fprintf(stderr, "******************************************************************************\n");
 }
 
-extern "C" void* gmemmgr_add(void* ptr, size_t size, const char* file, const int line) {
+void* gmemmgr_add(void* ptr, size_t size, const char* file, const int line) {
   gmemmgr_t::iterator it = _gmemmgr.find(ptr);
   if (it != _gmemmgr.end()) {
     fprintf(stderr, "ptr(%p) is already added size=%d file=%s line=%d\n", ptr, (int)size, file, line);
@@ -41,7 +41,7 @@ extern "C" void* gmemmgr_add(void* ptr, size_t size, const char* file, const int
   return ptr;
 }
 
-extern "C" void gmemmgr_del(void* ptr) {
+void gmemmgr_del(void* ptr) {
   if (ptr == NULL) {
     fprintf(stderr, "ptr is null\n");
     return;
