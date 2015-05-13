@@ -5,4 +5,5 @@ SUBDIRS += \
 	c_test \
 	cpp_cancel_test \
 	cpp_leak_test \
-	cpp_test
+	cpp_test \
+	malloc_test
