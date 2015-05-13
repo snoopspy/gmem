@@ -3,16 +3,16 @@
 
 void new_test()
 {
-  gmem_mgr_start();
+  gmemmgr_start();
   new int;
-  gmem_mgr_stop();
+  gmemmgr_stop();
 }
 
 void new_arr_test()
 {
-  gmem_mgr_start();
+  gmemmgr_start();
   new int[256];
-  gmem_mgr_stop();
+  gmemmgr_stop();
 }
 
 int main()

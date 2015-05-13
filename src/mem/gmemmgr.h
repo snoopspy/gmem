@@ -19,14 +19,14 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // export function
 // ----------------------------------------------------------------------------
-void gmem_mgr_start(void);
-void gmem_mgr_stop(void);
+void gmemmgr_start(void);
+void gmemmgr_stop(void);
 
 // ----------------------------------------------------------------------------
 // used internally
 // ----------------------------------------------------------------------------
-void* gmem_mgr_add(void* ptr, size_t size, const char* file, const int line);
-void  gmem_mgr_del(void* ptr);
+void* gmemmgr_add(void* ptr, size_t size, const char* file, const int line);
+void  gmemmgr_del(void* ptr);
 
 #ifdef __cplusplus
 }

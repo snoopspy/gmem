@@ -8,31 +8,31 @@
 
 void malloc_test()
 {
-  gmem_mgr_start();
+  gmemmgr_start();
   malloc(256);
-  gmem_mgr_stop();
+  gmemmgr_stop();
 }
 
 void calloc_test()
 {
-  gmem_mgr_start();
+  gmemmgr_start();
   calloc(4, 256);
-  gmem_mgr_stop();
+  gmemmgr_stop();
 }
 
 void realloc_test()
 {
   void *p;
 
-  gmem_mgr_start();
+  gmemmgr_start();
   p = malloc(4);
   realloc(p, 4);
-  gmem_mgr_stop();
+  gmemmgr_stop();
 
-  gmem_mgr_start();
+  gmemmgr_start();
   p = malloc(4);
   realloc(p, 400000);
-  gmem_mgr_stop();
+  gmemmgr_stop();
 }
 
 int main()
