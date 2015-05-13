@@ -1,5 +1,3 @@
-#ifdef _DEBUG
-
 #include <stdio.h>  // printf
 #include <stdlib.h> // malloc
 
@@ -79,5 +77,3 @@ void operator delete[](void* ptr) throw() {
     gmemleak_mgr_del(ptr);
     free(ptr);
 }
-
-#endif // _DEBUG

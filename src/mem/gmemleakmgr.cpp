@@ -1,10 +1,3 @@
-#ifndef _DEBUG
-extern "C" void gmemleak_mgr_start(void) {}
-extern "C" void gmemleak_mgr_stop(void) {}
-#endif // _DEBUG
-
-#ifdef _DEBUG
-
 #include <map>
 #include <stdio.h>  // fprintf
 #include "gmemleakmgr.h"
@@ -57,5 +50,3 @@ extern "C" void gmemleak_mgr_del(void* ptr) {
   if (it == _gmemleak_mgr.end()) return;
   _gmemleak_mgr.erase(it);
 }
-
-#endif // _DEBUG

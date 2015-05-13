@@ -10,8 +10,6 @@
 
 #pragma once
 
-#ifdef _DEBUG
-
 #include <stddef.h> // size_t
 
 #ifdef __cplusplus
@@ -43,5 +41,3 @@ void  operator delete  (void* ptr) throw();
 void  operator delete[](void* ptr) throw();
 
 #endif // __cplusplus
-
-#endif // _DEBUG
