@@ -11,7 +11,18 @@
 #define _debug
 
 // ----------------------------------------------------------------------------
-// function for c
+// control functions
+// ----------------------------------------------------------------------------
+void gmem_start(void) {
+  // gilgil temp 2015.05.14
+}
+
+void gmem_stop(void) {
+  // gilgil temp 2015.05.14
+}
+
+// ----------------------------------------------------------------------------
+// replace functions for c
 // ----------------------------------------------------------------------------
 void* gmem_malloc(size_t size, const char* file, const int line) {
   void* res;
@@ -50,7 +61,7 @@ void gmem_free(void *ptr, const char* file, const int line) {
 }
 
 // ----------------------------------------------------------------------------
-// function for cpp
+// replace operators for cpp
 // ----------------------------------------------------------------------------
 void* operator new(size_t size, const char* file, const int line) throw(std::bad_alloc) {
     _debug("new(%d, %s, %d)\n", (int)size, file, line);

@@ -12,11 +12,11 @@ typedef std::map<void*, gmemmgr_item_t> gmemmgr_t;
 
 static gmemmgr_t _gmemmgr;
 
-void gmemmgr_start(void) {
+void gmem_start(void) {
   _gmemmgr.clear();
 }
 
-void gmemmgr_stop(void) {
+void gmem_stop(void) {
   if (_gmemmgr.size() <= 0) return;
   fprintf(stderr, "******************************************************************************\n");
   for (gmemmgr_t::iterator it = _gmemmgr.begin(); it != _gmemmgr.end(); it++) {
