@@ -22,12 +22,18 @@ protected:
   virtual ~GMemMgr();
 
 public:
-  void start();
-  void stop();
-  void* add(void* ptr, size_t size, const char* file, const int line);
-  void del(void* ptr);
+  bool start();
+  bool stop(bool leakCheck = true);
+
+  void* malloc(size_t size, const char* file, const int line);
+  void* calloc(size_t nmemb, size_t size, const char* file, const int line);
+  void* realloc(void *ptr, size_t size, const char* file, const int line);
+  void free(void* ptr);
 
 protected:
+  bool active_ = false;
+  void* (*oldMalloc_)(size_t size) = nullptr;
+  void (*oldFree_)(void* ptr) = nullptr;
   struct Item {
     size_t size;
     char* file;
