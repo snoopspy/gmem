@@ -66,11 +66,9 @@ void* operator new[](size_t size, const char* file, const int line) throw(std::b
 void operator delete(void* ptr) throw() {
     _debug("delete(%p)\n", ptr);
     GMemMgr::instance().free(ptr);
-    free(ptr);
 }
 
 void operator delete[](void* ptr) throw() {
     _debug("delete[](%p)\n", ptr);
     GMemMgr::instance().free(ptr);
-    free(ptr);
 }
