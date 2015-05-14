@@ -12,6 +12,7 @@
 
 #include <map>
 #include <stddef.h> // size_t
+#include "gmemallocator.h"
 
 // ----------------------------------------------------------------------------
 // GMemMgr
@@ -39,7 +40,8 @@ protected:
     char* file;
     int line;
   };
-  typedef std::map<void*, Item> Items;
+  //typedef std::map<void*, Item> Items;
+  typedef std::map<void*, Item, std::less<void*>, gmem_namespace::mmap_allocator<std::pair<const void*,Item> > > Items;
   Items items_;
   void* (*oldMalloc_)(size_t size) = nullptr;
   void* (*oldCalloc_)(size_t nmemb, size_t size) = nullptr;
