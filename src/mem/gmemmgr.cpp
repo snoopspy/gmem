@@ -1,52 +1,58 @@
-#include <map>
 #include <stdio.h>  // fprintf
 #include "gmemmgr.h"
 
-typedef struct {
-  size_t size;
-  char* file;
-  int line;
-} gmemmgr_item_t;
-
-typedef std::map<void*, gmemmgr_item_t> gmemmgr_t;
-
-static gmemmgr_t _gmemmgr;
-
-void gmem_start(void) {
-  _gmemmgr.clear();
+// ----------------------------------------------------------------------------
+// GMemMgr
+// ----------------------------------------------------------------------------
+GMemMgr::GMemMgr() {
+  start();
 }
 
-void gmem_stop(void) {
-  if (_gmemmgr.size() <= 0) return;
+GMemMgr::~GMemMgr() {
+  stop();
+}
+
+void GMemMgr::start() {
+  items_.clear();
+}
+
+void GMemMgr::stop() {
+  if (items_.size() <= 0) return;
   fprintf(stderr, "******************************************************************************\n");
-  for (gmemmgr_t::iterator it = _gmemmgr.begin(); it != _gmemmgr.end(); it++) {
+  for (Items::iterator it = items_.begin(); it != items_.end(); it++) {
     void* ptr = it->first;
-    gmemmgr_item_t& item = it->second;
+    Item& item = it->second;
     fprintf(stderr, "memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
   }
   fprintf(stderr, "******************************************************************************\n");
+  items_.clear();
 }
 
-void* gmemmgr_add(void* ptr, size_t size, const char* file, const int line) {
-  gmemmgr_t::iterator it = _gmemmgr.find(ptr);
-  if (it != _gmemmgr.end()) {
+void* GMemMgr::add(void* ptr, size_t size, const char* file, const int line) {
+  Items::iterator it = items_.find(ptr);
+  if (it != items_.end()) {
     fprintf(stderr, "ptr(%p) is already added size=%d file=%s line=%d\n", ptr, (int)size, file, line);
     return NULL;
   }
-  gmemmgr_item_t item;
+  Item item;
   item.size = size;
   item.file = (char*)file;
   item.line = line;
-  _gmemmgr[ptr] = item;
+  items_[ptr] = item;
   return ptr;
 }
 
-void gmemmgr_del(void* ptr) {
+void GMemMgr::del(void* ptr) {
   if (ptr == NULL) {
     fprintf(stderr, "ptr is null\n");
     return;
   }
-  gmemmgr_t::iterator it = _gmemmgr.find(ptr);
-  if (it == _gmemmgr.end()) return;
-  _gmemmgr.erase(it);
+  Items::iterator it = items_.find(ptr);
+  if (it == items_.end()) return;
+  items_.erase(it);
+}
+
+GMemMgr& GMemMgr::instance() {
+  static GMemMgr instance;
+  return instance;
 }
