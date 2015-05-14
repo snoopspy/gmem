@@ -16,19 +16,36 @@ GMemMgr::~GMemMgr() {
 bool GMemMgr::start() {
   if (active_) return false;
   items_.clear();
+
   oldMalloc_ = (void*(*)(size_t))dlsym(RTLD_NEXT, "malloc");
   if (oldMalloc_ == nullptr) {
     fprintf(stderr, "dlsym('malloc') return nullptr dlerror=%s\n", dlerror());
-    oldFree_ = nullptr;
-    return false;
+    goto _fail;
+  }
+  oldCalloc_ = (void*(*)(size_t, size_t))dlsym(RTLD_NEXT, "calloc");
+  if (oldCalloc_ == nullptr) {
+    fprintf(stderr, "dlsym('calloc') return nullptr dlerror=%s\n", dlerror());
+    goto _fail;
+  }
+  oldRealloc_ = (void*(*)(void*, size_t))dlsym(RTLD_NEXT, "realloc");
+  if (oldRealloc_ == nullptr) {
+    fprintf(stderr, "dlsym('realloc') return nullptr dlerror=%s\n", dlerror());
+    goto _fail;
   }
   oldFree_ = (void(*)(void*))dlsym(RTLD_NEXT, "free");
   if (oldFree_ == nullptr) {
     fprintf(stderr, "dlsym('malloc') return nullptr dlerror=%s\n", dlerror());
-    return false;
+    goto _fail;
   }
   active_ = true;
   return true;
+
+_fail:
+  oldMalloc_ = nullptr;
+  oldCalloc_ = nullptr;
+  oldRealloc_ = nullptr;
+  oldFree_ = nullptr;
+  return false;
 }
 
 bool GMemMgr::stop(bool leakCheck) {
@@ -47,7 +64,15 @@ bool GMemMgr::stop(bool leakCheck) {
   return true;
 }
 
+bool GMemMgr::restart() {
+  bool res = true;
+  if (!start()) res = false;
+  if (!stop(false)) res = false;
+  return res;
+}
+
 void* GMemMgr::malloc(size_t size, const char* file, const int line) {
+  if (!active_ || oldMalloc_ == nullptr) return nullptr;
   void* ptr = oldMalloc_(size);
   if (ptr == nullptr) {
     fprintf(stderr, "oldMalloc_ return nullptr");
