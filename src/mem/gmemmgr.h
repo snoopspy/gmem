@@ -10,9 +10,7 @@
 
 #pragma once
 
-#include <map>
 #include <stddef.h> // size_t
-#include "gmemallocator.h"
 
 // ----------------------------------------------------------------------------
 // GMemMgr
@@ -33,20 +31,6 @@ public:
   void* realloc(void* ptr, size_t size, const char* file, const int line);
   void free(void* ptr);
 
-protected:
-  bool active_ = false;
-  struct Item {
-    size_t size;
-    char* file;
-    int line;
-  };
-  //typedef std::map<void*, Item> Items;
-  typedef std::map<void*, Item, std::less<void*>, gmem_namespace::mmap_allocator<std::pair<const void*,Item> > > Items;
-  Items items_;
-  void* (*oldMalloc_)(size_t size) = nullptr;
-  void* (*oldCalloc_)(size_t nmemb, size_t size) = nullptr;
-  void* (*oldRealloc_)(void *ptr, size_t size) = nullptr;
-  void (*oldFree_)(void* ptr) = nullptr;
 public:
   static GMemMgr& instance();
 };
