@@ -12,7 +12,10 @@ public:
     char* file;
     int line;
   };
-  typedef std::unordered_map<void*, Item, std::hash<void*>, std::equal_to<void*>, GMemAllocator<std::pair<const void*,Item>>> Items;
+  typedef std::unordered_map<void*, Item,
+    std::hash<void*>,
+    std::equal_to<void*>,
+    GMemAllocator<std::pair<const void*,Item>>> Items;
   Items items_;
 
 public:
