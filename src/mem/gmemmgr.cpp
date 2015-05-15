@@ -137,11 +137,11 @@ GMemMgr& GMemMgr::instance() {
 // ----------------------------------------------------------------------------
 // override function
 // ----------------------------------------------------------------------------
-void *malloc(size_t size) __THROW {
+void *malloc(size_t size)  {
   return GMemMgr::instance().malloc(size, nullptr, 0);
 }
 
-void free(void* ptr) __THROW {
+void free(void* ptr)  {
   return GMemMgr::instance().free(ptr);
 }
 */
