@@ -1,3 +1,5 @@
+// ----- gilgil temp 2015.05.15 -----
+/*
 #include <stdio.h> // fprintf
 #include "gmemallocator.h"
 #include "gmemmgr.h"
@@ -142,3 +144,5 @@ void *malloc(size_t size) __THROW {
 void free(void* ptr) __THROW {
   return GMemMgr::instance().free(ptr);
 }
+*/
+// ----------------------------------

@@ -21,21 +21,34 @@ protected:
   virtual ~GMemHook();
 
 public:
-  bool hook();
-  bool unhook();
+  typedef void* (*MallocFunc) (size_t size);
+  typedef void* (*CallocFunc) (size_t nmemb, size_t size);
+  typedef void* (*ReallocFunc)(void* ptr,    size_t size);
+  typedef void  (*FreeFunc)   (void* ptr);
+
+  MallocFunc  orgMallocFunc_  = nullptr;
+  CallocFunc  orgCallocFunc_  = nullptr;
+  ReallocFunc orgReallocFunc_ = nullptr;
+  FreeFunc    orgFreeFunc_    = nullptr;
+
+  MallocFunc  nowMallocFunc_  = nullptr;
+  CallocFunc  nowCallocFunc_  = nullptr;
+  ReallocFunc nowReallocFunc_ = nullptr;
+  FreeFunc    nowFreeFunc_    = nullptr;
 
 public:
-  void* malloc(size_t size, const char* file, const int line);
-  void* calloc(size_t nmemb, size_t size, const char* file, const int line);
-  void* realloc(void* ptr, size_t size, const char* file, const int line);
-  void free(void* ptr);
+  void hook(
+    MallocFunc  mallocFunc  = nullptr,
+    CallocFunc  callocFunc  = nullptr,
+    ReallocFunc reallocFunc = nullptr,
+    FreeFunc    freeFunc    = nullptr);
+  void unhook();
 
-protected:
-  bool active_ = false;
-  void* (*malloc_)(size_t size) = nullptr;
-  void* (*calloc_)(size_t nmemb, size_t size) = nullptr;
-  void* (*realloc_)(void *ptr, size_t size) = nullptr;
-  void (*free_)(void* ptr) = nullptr;
+public:
+  void* malloc(size_t size);
+  void* calloc(size_t nmemb, size_t size);
+  void* realloc(void*  ptr,   size_t size);
+  void  free(void*  ptr);
 
 public:
   static GMemHook& instance();
