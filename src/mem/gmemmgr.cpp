@@ -1,58 +1,6 @@
-#include <map>
-#include <dlfcn.h> // dlsym
 #include <stdio.h> // fprintf
 #include "gmemallocator.h"
 #include "gmemmgr.h"
-
-// ----------------------------------------------------------------------------
-// GMemMgrLeakChecker
-// ----------------------------------------------------------------------------
-class GMemMgrLeakChecker {
-public:
-  struct Item {
-    size_t size;
-    char* file;
-    int line;
-  };
-  typedef std::map<void*, Item, std::less<void*>, GMemAllocator<std::pair<const void*,Item> > > Items;
-  Items items_;
-
-public:
-  void clear() {
-    items_.clear();
-  }
-
-  void check() {
-    if (items_.size() > 0) {
-      fprintf(stderr, "******************************************************************************\n");
-      for (Items::iterator it = items_.begin(); it != items_.end(); it++) {
-        void* ptr = it->first;
-        Item& item = it->second;
-        fprintf(stderr, "memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
-      }
-      fprintf(stderr, "******************************************************************************\n");
-    }
-  }
-
-  bool exists(void* ptr) {
-    Items::iterator it = items_.find(ptr);
-    return it != items_.end();
-  }
-
-  void add(void* ptr, size_t size, char* file, int line) {
-    Item item;
-    item.size = size;
-    item.file = (char*)file;
-    item.line = line;
-    items_[ptr] = item;
-  }
-
-  void del(void* ptr) {
-    Items::iterator it = items_.find(ptr);
-    if (it == items_.end()) return;
-    items_.erase(it);
-  }
-};
 
 // ----------------------------------------------------------------------------
 // GMemMgrImpl
@@ -65,45 +13,15 @@ public:
 
   }
   bool start() {
-    if (active_) return false;
-    leakChecker_.clear();
-    oldMalloc_ = (void*(*)(size_t))dlsym(RTLD_NEXT, "malloc");
-    if (oldMalloc_ == nullptr) {
-      fprintf(stderr, "dlsym('malloc') return nullptr dlerror=%s\n", dlerror());
-      goto _fail;
-    }
-    oldCalloc_ = (void*(*)(size_t, size_t))dlsym(RTLD_NEXT, "calloc");
-    if (oldCalloc_ == nullptr) {
-      fprintf(stderr, "dlsym('calloc') return nullptr dlerror=%s\n", dlerror());
-      goto _fail;
-    }
-    oldRealloc_ = (void*(*)(void*, size_t))dlsym(RTLD_NEXT, "realloc");
-    if (oldRealloc_ == nullptr) {
-      fprintf(stderr, "dlsym('realloc') return nullptr dlerror=%s\n", dlerror());
-      goto _fail;
-    }
-    oldFree_ = (void(*)(void*))dlsym(RTLD_NEXT, "free");
-    if (oldFree_ == nullptr) {
-      fprintf(stderr, "dlsym('malloc') return nullptr dlerror=%s\n", dlerror());
-      goto _fail;
-    }
-    active_ = true;
-    return true;
 
-  _fail:
-    oldMalloc_ = nullptr;
-    oldCalloc_ = nullptr;
-    oldRealloc_ = nullptr;
-    oldFree_ = nullptr;
-    return false;
+    leakChecker_.clear();
+
+
   }
 
   bool stop(bool leakCheck) {
-    if (!active_) return false;
     if (leakCheck) leakChecker_.check();
     leakChecker_.clear();
-    active_ = false;
-    return true;
   }
 
   bool restart() {
@@ -159,10 +77,7 @@ public:
 protected:
   bool active_ = false;
   GMemMgrLeakChecker leakChecker_;
-  void* (*oldMalloc_)(size_t size) = nullptr;
-  void* (*oldCalloc_)(size_t nmemb, size_t size) = nullptr;
-  void* (*oldRealloc_)(void *ptr, size_t size) = nullptr;
-  void (*oldFree_)(void* ptr) = nullptr;
+
 
 };
 

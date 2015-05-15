@@ -10,20 +10,19 @@
 
 #pragma once
 
-#include <cstddef> // size_t
+#include <cstddef> // for size_t
 
 // ----------------------------------------------------------------------------
-// GMemMgr
+// GMemHook
 // ----------------------------------------------------------------------------
-class GMemMgr {
+class GMemHook {
 protected:
-  GMemMgr();
-  virtual ~GMemMgr();
+  GMemHook();
+  virtual ~GMemHook();
 
 public:
-  bool start();
-  bool stop(bool leakCheck = true);
-  bool restart();
+  bool hook();
+  bool unhook();
 
 public:
   void* malloc(size_t size, const char* file, const int line);
@@ -31,7 +30,13 @@ public:
   void* realloc(void* ptr, size_t size, const char* file, const int line);
   void free(void* ptr);
 
-public:
-  static GMemMgr& instance();
-};
+protected:
+  bool active_ = false;
+  void* (*malloc_)(size_t size) = nullptr;
+  void* (*calloc_)(size_t nmemb, size_t size) = nullptr;
+  void* (*realloc_)(void *ptr, size_t size) = nullptr;
+  void (*free_)(void* ptr) = nullptr;
 
+public:
+  static GMemHook& instance();
+};

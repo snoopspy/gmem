@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <stddef.h> // size_t
+#include <cstddef> // size_t
 
 #ifdef __cplusplus
 extern "C" {

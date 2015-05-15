@@ -10,28 +10,23 @@
 
 #pragma once
 
-#include <cstddef> // size_t
+#include <cstddef>
 
 // ----------------------------------------------------------------------------
-// GMemMgr
+// GMemLeak
 // ----------------------------------------------------------------------------
-class GMemMgr {
+class GMemLeak {
 protected:
-  GMemMgr();
-  virtual ~GMemMgr();
+  GMemLeak();
+  virtual ~GMemLeak();
 
 public:
-  bool start();
-  bool stop(bool leakCheck = true);
-  bool restart();
+  void clear();
+  void check();
+  bool exists(void* ptr);
+  void add(void* ptr, size_t size, const char* file, const int line);
+  void del(void* ptr);
 
 public:
-  void* malloc(size_t size, const char* file, const int line);
-  void* calloc(size_t nmemb, size_t size, const char* file, const int line);
-  void* realloc(void* ptr, size_t size, const char* file, const int line);
-  void free(void* ptr);
-
-public:
-  static GMemMgr& instance();
+  static GMemLeak& instance();
 };
-
