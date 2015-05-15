@@ -6,4 +6,6 @@ SUBDIRS += \
 	cpp_cancel_test \
 	cpp_leak_test \
 	cpp_test \
+	hook_test \
+	leak_test \
 	malloc_test

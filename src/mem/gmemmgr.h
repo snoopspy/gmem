@@ -27,9 +27,9 @@ public:
 
 public:
   void* malloc(size_t size, const char* file, const int line);
+  void free(void* ptr);
   void* calloc(size_t nmemb, size_t size, const char* file, const int line);
   void* realloc(void* ptr, size_t size, const char* file, const int line);
-  void free(void* ptr);
 
 public:
   static GMemMgr& instance();
