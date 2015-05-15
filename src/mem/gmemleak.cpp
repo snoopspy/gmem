@@ -1,4 +1,4 @@
-#include <map>
+#include <unordered_map>
 #include "gmemallocator.h"
 #include "gmemleak.h"
 
@@ -12,7 +12,7 @@ public:
     char* file;
     int line;
   };
-  typedef std::map<void*, Item, std::less<void*>, GMemAllocator<std::pair<const void*,Item>>> Items;
+  typedef std::unordered_map<void*, Item, std::hash<void*>, std::equal_to<void*>, GMemAllocator<std::pair<const void*,Item>>> Items;
   Items items_;
 
 public:
@@ -30,6 +30,7 @@ public:
       }
       fprintf(stderr, "******************************************************************************\n");
     }
+    items_.clear();
   }
 
   bool exists(void* ptr) {
