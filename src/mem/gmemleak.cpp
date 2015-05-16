@@ -42,6 +42,7 @@ public:
   }
 
   void add(void* ptr, size_t size, const char* file, const int line) {
+    // check duplicate // gilgil temp 2015.05.16
     Item item;
     item.size = size;
     item.file = (char*)file;
@@ -50,6 +51,7 @@ public:
   }
 
   void del(void* ptr) {
+    // check null // gilgil temp 2015.05.16
     Items::iterator it = items_.find(ptr);
     if (it == items_.end()) return;
     items_.erase(it);
@@ -59,9 +61,13 @@ public:
 // ----------------------------------------------------------------------------
 // GMemLeak
 // ----------------------------------------------------------------------------
+// ----- gilgil temp 2015.05.16 -----
+/*
 GMemLeak::GMemLeak() {
   clear();
 }
+*/
+// ----------------------------------
 
 GMemLeak::~GMemLeak() {
   check();

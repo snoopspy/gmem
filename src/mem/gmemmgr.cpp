@@ -1,3 +1,37 @@
+#include "gmemleak.h"
+#include "gmemmgr.h"
+
+// ----------------------------------------------------------------------------
+// GMemMgr
+// ----------------------------------------------------------------------------
+GMemMgr::GMemMgr() {
+  start();
+}
+
+GMemMgr::~GMemMgr() {
+  stop();
+}
+
+bool GMemMgr::start() {
+  GMemLeak::instance().
+}
+
+bool GMemMgr::stop() {
+  GMemLeak::stop();
+}
+
+bool GMemMgr::restart()
+void* GMemMgr::malloc(size_t size, const char* file, const int line)
+void  GMemMgr::free(void*  ptr)
+void* GMemMgr::calloc(size_t nmemb, size_t size, const char* file, const int line)
+void* GMemMgr::realloc(void* ptr, size_t size, const char* file, const int line)
+
+GMemMgr& GMemMgr::instance() {
+  static GMemMgr _instance;
+  return _instance;
+}
+
+
 // ----- gilgil temp 2015.05.15 -----
 /*
 #include <stdio.h> // fprintf

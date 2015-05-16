@@ -10,14 +10,14 @@
 
 #pragma once
 
-#include <cstddef>
+#include <cstddef> // size_t
 
 // ----------------------------------------------------------------------------
 // GMemLeak
 // ----------------------------------------------------------------------------
 class GMemLeak {
 protected:
-  GMemLeak();
+  // GMemLeak(); // gilgil temp 2015.05.16
   virtual ~GMemLeak();
 
 public:
