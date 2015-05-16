@@ -31,19 +31,6 @@ public:
   CallocFunc  orgCallocFunc_  = nullptr;
   ReallocFunc orgReallocFunc_ = nullptr;
 
-  MallocFunc  nowMallocFunc_  = nullptr;
-  FreeFunc    nowFreeFunc_    = nullptr;
-  CallocFunc  nowCallocFunc_  = nullptr;
-  ReallocFunc nowReallocFunc_ = nullptr;
-
-public:
-  void hook(
-    MallocFunc  mallocFunc  = nullptr,
-    FreeFunc    freeFunc    = nullptr,
-    CallocFunc  callocFunc  = nullptr,
-    ReallocFunc reallocFunc = nullptr);
-  void unhook();
-
 public:
   static GMemHook& instance();
 };
