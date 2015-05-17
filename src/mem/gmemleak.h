@@ -16,17 +16,10 @@
 // GMemLeak
 // ----------------------------------------------------------------------------
 class GMemLeak {
-protected:
-  // GMemLeak(); // gilgil temp 2015.05.16
-  virtual ~GMemLeak();
-
 public:
-  void clear();
-  void check();
-  bool exists(void* ptr);
-  void add(void* ptr, size_t size, const char* file, const int line);
-  void del(void* ptr);
-
-public:
-  static GMemLeak& instance();
+  static void clear();
+  static void check();
+  static bool exists(void* ptr);
+  static void add(void* ptr, size_t size, const char* file, const int line);
+  static void del(void* ptr, const char* file, const int line);
 };

@@ -1,41 +1,6 @@
+#include <cstdio> // fprintf
 #include "gmemleak.h"
-#include "gmemmgr.h"
-
-// ----------------------------------------------------------------------------
-// GMemMgr
-// ----------------------------------------------------------------------------
-GMemMgr::GMemMgr() {
-  start();
-}
-
-GMemMgr::~GMemMgr() {
-  stop();
-}
-
-bool GMemMgr::start() {
-  GMemLeak::instance().
-}
-
-bool GMemMgr::stop() {
-  GMemLeak::stop();
-}
-
-bool GMemMgr::restart()
-void* GMemMgr::malloc(size_t size, const char* file, const int line)
-void  GMemMgr::free(void*  ptr)
-void* GMemMgr::calloc(size_t nmemb, size_t size, const char* file, const int line)
-void* GMemMgr::realloc(void* ptr, size_t size, const char* file, const int line)
-
-GMemMgr& GMemMgr::instance() {
-  static GMemMgr _instance;
-  return _instance;
-}
-
-
-// ----- gilgil temp 2015.05.15 -----
-/*
-#include <stdio.h> // fprintf
-#include "gmemallocator.h"
+#include "gmemhook.h"
 #include "gmemmgr.h"
 
 // ----------------------------------------------------------------------------
@@ -44,139 +9,75 @@ GMemMgr& GMemMgr::instance() {
 class GMemMgrImpl : public GMemMgr {
 public:
   GMemMgrImpl() {
+    start();
   }
+
   virtual ~GMemMgrImpl() {
-
-  }
-  bool start() {
-
-    leakChecker_.clear();
-
-
+    stop();
   }
 
-  bool stop(bool leakCheck) {
-    if (leakCheck) leakChecker_.check();
-    leakChecker_.clear();
+  void start() {
+    GMemLeak::check();
+    GMemLeak::clear();
   }
 
-  bool restart() {
-    bool res = true;
-    if (!start()) res = false;
-    if (!stop(false)) res = false;
-    return res;
+  void stop() {
+    GMemLeak::clear();
   }
 
 public:
   void* malloc(size_t size, const char* file, const int line) {
-    if (!active_ || oldMalloc_ == nullptr) return nullptr;
-    void* ptr = oldMalloc_(size);
-    if (ptr == nullptr) {
-      fprintf(stderr, "oldMalloc_ return nullptr");
-      return nullptr;
-    }
-    printf("GMemMgr::malloc (%p) %zu\n", ptr, size);
+    void* res = GMemHook::instance().orgMallocFunc_(size);
+    GMemLeak::add(res, size, file, line);
+    return res;
+  }
 
-    if (leakChecker_.exists(ptr)) {
-      fprintf(stderr, "ptr(%p) is already added size=%d file=%s line=%d\n", ptr, (int)size, file, line);
-      return nullptr;
-    }
-    leakChecker_.add(ptr, size, (char*)file, line);
-    return ptr;
+  void free(void* ptr, const char* file, const int line) {
+    GMemHook::instance().orgFreeFunc_(ptr);
+    GMemLeak::del(ptr, file, line);
   }
 
   void* calloc(size_t nmemb, size_t size, const char* file, const int line) {
-    (void)nmemb;
-    (void)size;
-    (void)file;
-    (void)line;
-    return nullptr; // gilgil temp 2015.05.14
+    void* res = GMemHook::instance().orgCallocFunc_(nmemb, size);
+    GMemLeak::add(res, size, file, line);
+    return res;
   }
 
   void* realloc(void* ptr, size_t size, const char* file, const int line) {
-    (void)ptr;
-    (void)size;
-    (void)file;
-    (void)line;
-    return nullptr; // gilgil temp 2015.05.14
+    void* res = GMemHook::instance().orgReallocFunc_(ptr, size);
+    GMemLeak::add(res, size, file, line);
+    return res;
   }
 
-  void free(void* ptr) {
-    if (ptr == NULL) {
-      fprintf(stderr, "ptr is null\n");
-      return;
-    }
-    printf("GMemMgr::free   (%p)\n", ptr);
-    leakChecker_.del(ptr);
+  static GMemMgrImpl& instance() {
+    static GMemMgrImpl _memMgrImpl;
+    return _memMgrImpl;
   }
-
-protected:
-  bool active_ = false;
-  GMemMgrLeakChecker leakChecker_;
-
-
 };
 
 // ----------------------------------------------------------------------------
 // GMemMgr
 // ----------------------------------------------------------------------------
-GMemMgr::GMemMgr() {
-  start();
+void GMemMgr::start() {
+  GMemMgrImpl::instance().start();
 }
 
-GMemMgr::~GMemMgr() {
-  stop();
-}
-
-bool GMemMgr::start() {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->start();
-}
-
-bool GMemMgr::stop(bool leakCheck) {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->stop(leakCheck);
-}
-
-bool GMemMgr::restart() {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->restart();
+void GMemMgr::stop() {
+  GMemMgrImpl::instance().stop();
 }
 
 void* GMemMgr::malloc(size_t size, const char* file, const int line) {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->malloc(size, file, line);
+  return GMemMgrImpl::instance().malloc(size, file, line);
+}
+
+void GMemMgr::free(void* ptr, const char* file, const int line) {
+  return GMemMgrImpl::instance().free(ptr, file, line);
 }
 
 void* GMemMgr::calloc(size_t nmemb, size_t size, const char* file, const int line) {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->calloc(nmemb, size, file, line);
+  return GMemMgrImpl::instance().calloc(nmemb, size, file, line);
 }
 
-void* GMemMgr::realloc(void *ptr, size_t size, const char* file, const int line) {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->realloc(ptr, size, file, line);
+void* GMemMgr::realloc(void* ptr, size_t size, const char* file, const int line) {
+  return GMemMgrImpl::instance().realloc(ptr, size, file, line);
 }
-
-void GMemMgr::free(void* ptr) {
-  GMemMgrImpl* impl = (GMemMgrImpl*)this;
-  return impl->free(ptr);
-}
-
-GMemMgr& GMemMgr::instance() {
-  static GMemMgr instance;
-  return instance;
-}
-
-// ----------------------------------------------------------------------------
-// override function
-// ----------------------------------------------------------------------------
-void *malloc(size_t size)  {
-  return GMemMgr::instance().malloc(size, nullptr, 0);
-}
-
-void free(void* ptr)  {
-  return GMemMgr::instance().free(ptr);
-}
-*/
-// ----------------------------------

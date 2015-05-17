@@ -8,19 +8,19 @@
 //
 // ----------------------------------------------------------------------------
 
+#include "gmemfunc.h"
+
 // ----------------------------------------------------------------------------
 // macro for c
 // ----------------------------------------------------------------------------
-#include "gmemfunc.h"
-
 #undef  malloc
 #define malloc(SIZE)        gmem_malloc ((SIZE),          __FILE__, __LINE__)
+#undef  free
+#define free(PTR)           gmem_free   ((PTR),           __FILE__, __LINE__)
 #undef  calloc
 #define calloc(NMEMB, SIZE) gmem_calloc ((NMEMB), (SIZE), __FILE__, __LINE__)
 #undef  realloc
-#define realloc(PTR, SIZE)  gmem_realloc((PTR), (SIZE),   __FILE__, __LINE__)
-#undef  free
-#define free(PTR)           gmem_free   ((PTR),           __FILE__, __LINE__)
+#define realloc(PTR, SIZE)  gmem_realloc((PTR),   (SIZE), __FILE__, __LINE__)
 
 // ----------------------------------------------------------------------------
 // macro for cpp

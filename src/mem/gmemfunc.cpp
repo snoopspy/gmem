@@ -1,12 +1,15 @@
 #include <stdio.h>  // printf
 #include <stdlib.h> // malloc
-
 #include "gmemfunc.h"
 #include "gmemmgr.h"
 
+// ----- gilgil temp 2015.05.17 -----
+/*
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-value"
 #endif // __GNUC__
+*/
+// ----------------------------------
 
 #define _debug
 
@@ -14,64 +17,77 @@
 // control functions
 // ----------------------------------------------------------------------------
 void gmem_start(void) {
-  // GMemMgr::instance().start(); // gilgil temp 2015.05.15
+  GMemMgr::start();
 }
 
 void gmem_stop(void) {
-  // GMemMgr::instance().stop(); // gilgil temp 2015.05.15
+  GMemMgr::stop();
 }
 
 // ----------------------------------------------------------------------------
 // replace functions for c
 // ----------------------------------------------------------------------------
 void* gmem_malloc(size_t size, const char* file, const int line) {
-  _debug("gmem_malloc(%d, %s, %d)\n", (int)size, file, line);
-  // void* res = GMemMgr::instance().malloc(size, file, line); // gilgil temp 2015.05.15
-  // return res; // gilgil temp 2015.05.15
-  return nullptr;
-}
-
-void* gmem_calloc(size_t nmemb, size_t size, const char* file, const int line) {
-  _debug("gmem_calloc(%d, %d, %s, %d)\n", (int)nmemb, (int)size, file, line);
-  // void* res = GMemMgr::instance().calloc(nmemb, size, file, line); // gilgil temp 2015.05.15
-  // return res; // gilgil temp 2015.05.15
-  return nullptr;
-}
-
-void* gmem_realloc(void *ptr, size_t size, const char* file, const int line) {
-  _debug("gmem_realloc(%p, %d, %s, %d)\n", ptr, (int)size, file, line);
-  //void* res = GMemMgr::instance().realloc(ptr, size, file, line); // gilgil temp 2015.05.15
-  //return res; // gilgil temp 2015.05.15
-  return nullptr;
+  return GMemMgr::malloc(size, file, line);
 }
 
 void gmem_free(void *ptr, const char* file, const int line) {
-  _debug("gmem_free(%p, %s, %d)\n", ptr, file, line);
-  //GMemMgr::instance().free(ptr); // gilgil temp 2015.05.15
-  //free(ptr); // gilgil temp 2015.05.15
+  return GMemMgr::free(ptr, file, line);
+}
+
+void* gmem_calloc(size_t nmemb, size_t size, const char* file, const int line) {
+  return GMemMgr::calloc(nmemb, size, file, line);
+}
+
+void* gmem_realloc(void *ptr, size_t size, const char* file, const int line) {
+  return GMemMgr::realloc(ptr, size, file, line);
 }
 
 // ----------------------------------------------------------------------------
 // replace operators for cpp
 // ----------------------------------------------------------------------------
 void* operator new(size_t size, const char* file, const int line) throw(std::bad_alloc) {
-    _debug("new(%d, %s, %d)\n", (int)size, file, line);
-    // void* res = GMemMgr::instance().malloc(size, file, line); // gilgil temp 2015.05.15
-    // return res; // gilgil temp 2015.05.15
+  return GMemMgr::malloc(size, file, line);
 }
 
 void* operator new[](size_t size, const char* file, const int line) throw(std::bad_alloc) {
-    _debug("new[](%d, %s, %d)\n", (int)size, file, line);
-    // void* res = GMemMgr::instance().malloc(size, file, line); // gilgil temp 2015.05.15
-    // return res; // gilgil temp 2015.05.15
+  return GMemMgr::malloc(size, file, line);
+}
+
+// ----------------------------------------------------------------------------
+// global functions for c
+// ----------------------------------------------------------------------------
+void* malloc(size_t size) {
+  return GMemMgr::malloc(size, nullptr, 0);
+}
+
+void free(void* ptr) {
+  return GMemMgr::free(ptr, nullptr, 0);
+}
+
+void* calloc(size_t nmemb, size_t size) {
+  return GMemMgr::calloc(nmemb, size, nullptr, 0);
+}
+
+void* realloc (void* ptr, size_t size) {
+  return GMemMgr::realloc(ptr, size, nullptr, 0);
+}
+
+// ----------------------------------------------------------------------------
+// global operators for cpp
+// ----------------------------------------------------------------------------
+void* operator new(size_t size) throw (std::bad_alloc) {
+  return GMemMgr::malloc(size, nullptr, 0);
+}
+
+void* operator new[](size_t size) throw (std::bad_alloc) {
+  return GMemMgr::malloc(size, nullptr, 0);
 }
 
 void operator delete(void* ptr) throw() {
-    _debug("delete(%p)\n", ptr);
-    // GMemMgr::instance().free(ptr); // gilgil temp 2015.05.15
+  GMemMgr::free(ptr, nullptr, 0);
 }
 
 void operator delete[](void* ptr) throw() {
-    _debug("delete[](%p)\n", ptr);
-    // GMemMgr::instance().free(ptr); // gilgil temp 2015.05.15
+  GMemMgr::free(ptr, nullptr, 0);
 }

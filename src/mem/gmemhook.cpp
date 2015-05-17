@@ -1,7 +1,7 @@
-#include <assert.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
 #include <dlfcn.h> // dlsym
-#include <stdio.h>
-#include <stdlib.h>
 #include "gmemhook.h"
 
 // ----------------------------------------------------------------------------

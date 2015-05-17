@@ -26,9 +26,9 @@ void gmem_stop(void);
 // replace functions for c
 // ----------------------------------------------------------------------------
 void* gmem_malloc (              size_t size, const char* file, const int line);
+void  gmem_free   (void *ptr,                 const char* file, const int line);
 void* gmem_calloc (size_t nmemb, size_t size, const char* file, const int line);
 void* gmem_realloc(void *ptr,    size_t size, const char* file, const int line);
-void  gmem_free   (void *ptr,                 const char* file, const int line);
 
 #ifdef __cplusplus
 }
@@ -41,9 +41,7 @@ void  gmem_free   (void *ptr,                 const char* file, const int line);
 // ----------------------------------------------------------------------------
 // replace operators for cpp
 // ----------------------------------------------------------------------------
-void* operator new     (size_t size, const char* file, const int line) throw(std::bad_alloc);
-void* operator new[]   (size_t size, const char* file, const int line) throw(std::bad_alloc);
-void  operator delete  (void* ptr) throw();
-void  operator delete[](void* ptr) throw();
+void* operator new  (size_t size, const char* file, const int line) throw (std::bad_alloc);
+void* operator new[](size_t size, const char* file, const int line) throw (std::bad_alloc);
 
 #endif // __cplusplus

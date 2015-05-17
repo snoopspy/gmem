@@ -17,17 +17,12 @@
 // ----------------------------------------------------------------------------
 class GMemMgr {
 public:
-  bool start();
-  bool stop();
-  bool restart();
+  static void start();
+  static void stop();
 
 public:
-  void* malloc (size_t size,               const char* file, const int line);
-  void  free   (void*  ptr);
-  void* calloc (size_t nmemb, size_t size, const char* file, const int line);
-  void* realloc(void*  ptr,   size_t size, const char* file, const int line);
-
-public:
-  static GMemMgr& instance();
+  static void* malloc (size_t size,               const char* file, const int line);
+  static void  free   (void*  ptr,                const char* file, const int line);
+  static void* calloc (size_t nmemb, size_t size, const char* file, const int line);
+  static void* realloc(void*  ptr,   size_t size, const char* file, const int line);
 };
-
