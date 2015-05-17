@@ -33,7 +33,7 @@ int main() {
   printf("\n# calloc test\n");
   ptr = calloc(4, 256);
 
-  printf("\n# reaalloc test\n");
+  printf("\n# realloc test\n");
   ptr = realloc(ptr, 400000);
   free(ptr);
 }
