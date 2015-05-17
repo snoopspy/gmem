@@ -1,10 +1,10 @@
 #include <GMemLeak>
 
 int main() {
-  GMemLeak& memLeak = GMemLeak::instance();
-  memLeak.add((void*)1, 100, __FILE__, __LINE__);
-  memLeak.add((void*)2, 200, __FILE__, __LINE__);
-  memLeak.add((void*)3, 300, __FILE__, __LINE__);
-  memLeak.del((void*)2);
-  memLeak.check();
+  GMemLeak::add((void*)1, 100, __FILE__, __LINE__);
+  GMemLeak::add((void*)1, 100, __FILE__, __LINE__);
+  GMemLeak::add((void*)2, 200, __FILE__, __LINE__);
+  GMemLeak::add((void*)3, 300, __FILE__, __LINE__);
+  GMemLeak::del((void*)2, __FILE__, __LINE__);
+  GMemLeak::check();
 }

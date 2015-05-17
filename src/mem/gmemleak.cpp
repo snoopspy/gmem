@@ -51,7 +51,12 @@ public:
   }
 
   void add(void* ptr, size_t size, const char* file, const int line) {
-    // check duplicate // gilgil temp 2015.05.16
+    if (items_.find(ptr) != items_.end()) {
+      fprintf(stderr, "******************************************************************************\n");
+      fprintf(stderr, "already exist ptr(%p) file=%s line=%d\n", ptr, file, line);
+      fprintf(stderr, "******************************************************************************\n");
+      return;
+    }
     Item item;
     item.size = size;
     item.file = (char*)file;
@@ -63,20 +68,9 @@ public:
     Items::iterator it = items_.find(ptr);
     if (it == items_.end()) {
       fprintf(stderr, "******************************************************************************\n");
-      fprintf(stderr, "can not find %p\n", ptr);
+      fprintf(stderr, "can not find ptr(%p) file=%s line=%d\n", ptr, file, line);
       fprintf(stderr, "******************************************************************************\n");
       return;
-    }
-    Item& item = it->second;
-    if (file != item.file) {
-      fprintf(stderr, "******************************************************************************\n");
-      fprintf(stderr, "file is different %p %p %p\n", ptr, file, item.file);
-      fprintf(stderr, "******************************************************************************\n");
-    }
-    if (line != item.line) {
-      fprintf(stderr, "******************************************************************************\n");
-      fprintf(stderr, "line is different %p %d %d\n", ptr, line, item.line);
-      fprintf(stderr, "******************************************************************************\n");
     }
     items_.erase(it);
   }
