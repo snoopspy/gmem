@@ -55,25 +55,6 @@ void* operator new[](size_t size, const char* file, const int line) throw(std::b
 }
 
 // ----------------------------------------------------------------------------
-// global functions for c
-// ----------------------------------------------------------------------------
-void* malloc(size_t size) {
-  return GMemMgr::malloc(size, nullptr, 0);
-}
-
-void free(void* ptr) {
-  return GMemMgr::free(ptr, nullptr, 0);
-}
-
-void* calloc(size_t nmemb, size_t size) {
-  return GMemMgr::calloc(nmemb, size, nullptr, 0);
-}
-
-void* realloc (void* ptr, size_t size) {
-  return GMemMgr::realloc(ptr, size, nullptr, 0);
-}
-
-// ----------------------------------------------------------------------------
 // global operators for cpp
 // ----------------------------------------------------------------------------
 void* operator new(size_t size) throw (std::bad_alloc) {

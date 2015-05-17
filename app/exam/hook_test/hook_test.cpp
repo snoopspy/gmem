@@ -2,38 +2,48 @@
 #include <cstdlib>
 #include <GMemHook>
 
-void* malloc(size_t size) {
+void* myMalloc(size_t size) {
   void* res = GMemHook::instance().orgMallocFunc_(size);
-  printf("malloc(%zu) return %p\n", size, res);
+  printf("myMalloc(%zu) return %p\n", size, res);
   return res;
 }
 
-void free(void *ptr) {
-  printf("free(%p)\n", ptr);
+void myFree(void *ptr) {
+  printf("myFree(%p)\n", ptr);
   GMemHook::instance().orgFreeFunc_(ptr);
 }
 
-void* calloc(size_t nmemb, size_t size) {
+void* myCalloc(size_t nmemb, size_t size) {
   void* res = GMemHook::instance().orgCallocFunc_(nmemb, size);
-  printf("calloc(%zu, %zu) return %p\n", nmemb, size, res);
+  printf("myCalloc(%zu, %zu) return %p\n", nmemb, size, res);
   return res;
 }
 
-void* realloc(void* ptr, size_t size) {
+void* myRealloc(void* ptr, size_t size) {
   void* res = GMemHook::instance().orgReallocFunc_(ptr, size);
-  printf("realloc(%p, %zu) return %p\n", ptr, size, res);
+  printf("myRealloc(%p, %zu) return %p\n", ptr, size, res);
   return res;
 }
 
-int main() {
+void test() {
   printf("# malloc test\n");
   void* ptr = malloc(256);
   free(ptr);
 
-  printf("\n# calloc test\n");
+  printf("# calloc test\n");
   ptr = calloc(4, 256);
 
-  printf("\n# realloc test\n");
+  printf("# realloc test\n");
   ptr = realloc(ptr, 400000);
   free(ptr);
+}
+
+int main() {
+  printf("hook test\n");
+  GMemHook::instance().hook(myMalloc, myFree, myCalloc, myRealloc);
+  test();
+
+  printf("\nunhook test\n");
+  GMemHook::instance().unhook();
+  test();
 }
