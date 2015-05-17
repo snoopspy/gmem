@@ -17,11 +17,11 @@ public:
   }
 
   void start() {
-    GMemLeak::check();
     GMemLeak::clear();
   }
 
   void stop() {
+    GMemLeak::check();
     GMemLeak::clear();
   }
 
