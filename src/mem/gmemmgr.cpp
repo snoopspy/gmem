@@ -5,9 +5,9 @@
 #include "gmemmgr.h"
 
 // ----------------------------------------------------------------------------
-// GMemLeakImpl
+// GMemLeak
 // ----------------------------------------------------------------------------
-class GMemLeakImpl {
+class GMemLeak {
 public:
   struct Item {
     size_t size;
@@ -21,11 +21,11 @@ public:
   Items items_;
 
 public:
-  GMemLeakImpl() {
+  GMemLeak() {
     clear();
   }
 
-  virtual ~GMemLeakImpl() {
+  virtual ~GMemLeak() {
     check();
     clear();
   }
@@ -77,8 +77,8 @@ public:
     items_.erase(it);
   }
 
-  static GMemLeakImpl& instance() {
-    static GMemLeakImpl _memLeakImpl;
+  static GMemLeak& instance() {
+    static GMemLeak _memLeakImpl;
     return _memLeakImpl;
   }
 };
@@ -88,7 +88,7 @@ public:
 // ----------------------------------------------------------------------------
 class GMemMgrImpl {
 protected:
-  GMemLeakImpl memLeak_;
+  GMemLeak memLeak_;
 
 public:
   GMemMgrImpl() {
