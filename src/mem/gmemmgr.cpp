@@ -97,6 +97,7 @@ public:
   }
 
   virtual ~GMemMgrImpl() {
+    GMemHook::instance().unhook();
     stop();
   }
 
