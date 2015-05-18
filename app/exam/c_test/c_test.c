@@ -3,24 +3,24 @@
 
 void malloc_test()
 {
-  void* p = malloc(4);
+  void* p = malloc(256);
   free(p);
 }
 
 void calloc_test()
 {
-  void* p = calloc(256, 4);
+  void* p = calloc(2, 256);
   free(p);
 }
 
 void realloc_test()
 {
-  void* p = malloc(4);
-  p = realloc(p, 4);
+  void* p = malloc(256);
+  p = realloc(p, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 400000);
+  p = malloc(256);
+  p = realloc(p, 1024);
   free(p);
 }
 

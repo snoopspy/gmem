@@ -3,54 +3,54 @@
 
 void first_test()
 {
-  void *p = malloc(4);
+  void *p = malloc(256);
   free(p);
 
-  p = calloc(256, 4);
+  p = calloc(2, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 4);
+  p = malloc(256);
+  p = realloc(p, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 400000);
+  p = malloc(256);
+  p = realloc(p, 1024);
   free(p);
 }
 
 #include <GMemCancel>
 void cancel_test()
 {
-  void *p = malloc(4);
+  void *p = malloc(256);
   free(p);
 
-  p = calloc(256, 4);
+  p = calloc(2, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 4);
+  p = malloc(256);
+  p = realloc(p, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 400000);
+  p = malloc(256);
+  p = realloc(p, 1024);
   free(p);
 }
 
 #include <GMem>
 void second_test()
 {
-  void *p = malloc(4);
+  void *p = malloc(256);
   free(p);
 
-  p = calloc(256, 4);
+  p = calloc(2, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 4);
+  p = malloc(256);
+  p = realloc(p, 256);
   free(p);
 
-  p = malloc(4);
-  p = realloc(p, 400000);
+  p = malloc(256);
+  p = realloc(p, 1024);
   free(p);
 }
 

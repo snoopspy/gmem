@@ -7,7 +7,7 @@ void foo(char* p, size_t size) {
 }
 
 int main() {
-  char* p = (char*)malloc(1);
+  char* p = (char*)malloc(256);
   foo(p, 1); // disable code optimization
   free(p);
 }

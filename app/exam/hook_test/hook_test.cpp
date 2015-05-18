@@ -31,10 +31,10 @@ void test() {
   free(ptr);
 
   printf("# calloc test\n");
-  ptr = calloc(4, 256);
+  ptr = calloc(2, 256);
 
   printf("# realloc test\n");
-  ptr = realloc(ptr, 400000);
+  ptr = realloc(ptr, 1024);
   free(ptr);
 }
 
