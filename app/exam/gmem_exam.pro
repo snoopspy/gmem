@@ -8,4 +8,5 @@ SUBDIRS += \
 	cpp_test \
 	hook_test \
 	malloc_test \
-	mgr_test
+	mgr_test \
+	qt_test
