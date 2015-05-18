@@ -128,6 +128,7 @@ public:
 
   void* realloc(void* ptr, size_t size, const char* file, const int line) {
     void* res = GMemHook::instance().orgReallocFunc_(ptr, size);
+    memLeak_.del(ptr, file, line);
     memLeak_.add(res, size, file, line);
     return res;
   }

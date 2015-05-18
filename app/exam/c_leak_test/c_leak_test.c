@@ -24,13 +24,13 @@ void realloc_test()
   void *p;
 
   gmem_start();
-  p = malloc(4);
-  realloc(p, 4);
+  p = malloc(256);
+  realloc(p, 256);
   gmem_stop();
 
   gmem_start();
-  p = malloc(4);
-  realloc(p, 400000);
+  p = malloc(256);
+  realloc(p, 1024);
   gmem_stop();
 }
 
