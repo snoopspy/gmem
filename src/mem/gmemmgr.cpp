@@ -92,6 +92,7 @@ protected:
 
 public:
   GMemMgrImpl() {
+    GMemHook::instance().hook(_malloc, _free, _calloc, _realloc);
     start();
   }
 
@@ -106,6 +107,23 @@ public:
   void stop() {
     memLeak_.check();
     memLeak_.clear();
+  }
+
+protected:
+  static void* _malloc(size_t size) {
+    return instance().malloc(size, nullptr, 0);
+  }
+
+  static void _free(void* ptr) {
+    return instance().free(ptr, nullptr, 0);
+  }
+
+  static void* _calloc(size_t nmemb, size_t size) {
+    return instance().calloc(nmemb, size, nullptr, 0);
+  }
+
+  static void* _realloc(void* ptr, size_t size) {
+    return instance().realloc(ptr, size, nullptr, 0);
   }
 
 public:
