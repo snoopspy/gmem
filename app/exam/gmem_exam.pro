@@ -9,5 +9,5 @@ SUBDIRS += \
 	hook_test \
 	malloc_test \
 	mgr_test \
-  option_test \
+	option_test \
 	qt_test
