@@ -36,13 +36,13 @@ public:
 
   void check() {
     if (items_.size() > 0) {
-      fprintf(stderr, "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
       for (Items::iterator it = items_.begin(); it != items_.end(); it++) {
         void* ptr = it->first;
         Item& item = it->second;
-        fprintf(stderr, "memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
+        fprintf(GMemMgr::err(), "memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
       }
-      fprintf(stderr, "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
       items_.clear();
     }
   }
@@ -54,9 +54,9 @@ public:
 
   void add(void* ptr, size_t size, const char* file, const int line) {
     if (items_.find(ptr) != items_.end()) {
-      fprintf(stderr, "******************************************************************************\n");
-      fprintf(stderr, "already exist ptr(%p) file=%s line=%d\n", ptr, file, line);
-      fprintf(stderr, "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "already exist ptr(%p) file=%s line=%d\n", ptr, file, line);
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
       return;
     }
     Item item;
@@ -69,9 +69,9 @@ public:
   void del(void* ptr, const char* file, const int line) {
     Items::iterator it = items_.find(ptr);
     if (it == items_.end()) {
-      fprintf(stderr, "******************************************************************************\n");
-      fprintf(stderr, "can not find ptr(%p) file=%s line=%d\n", ptr, file, line);
-      fprintf(stderr, "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "can not find ptr(%p) file=%s line=%d\n", ptr, file, line);
+      fprintf(GMemMgr::err(), "******************************************************************************\n");
       return;
     }
     items_.erase(it);
@@ -88,10 +88,16 @@ public:
 // ----------------------------------------------------------------------------
 class GMemMgrImpl {
 protected:
+  bool verbose_;
+  FILE* err_;
+  FILE* out_;
   GMemLeak memLeak_;
 
 public:
   GMemMgrImpl() {
+    verbose_ = false;
+    out_ = stdout;
+    err_ = stderr;
     GMemHook::instance().hook(_malloc, _free, _calloc, _realloc);
     start();
   }
@@ -108,6 +114,30 @@ public:
   void stop() {
     memLeak_.check();
     memLeak_.clear();
+  }
+
+  bool verbose() {
+    return verbose_;
+  }
+
+  void setVerbose(bool value) {
+    verbose_ = value;
+  }
+
+  FILE* err() {
+    return err_;
+  }
+
+  void setErr(FILE* value) {
+    err_ = value;
+  }
+
+  FILE* out() {
+    return out_;
+  }
+
+  void setOut(FILE* value) {
+    out_ = value;
   }
 
 protected:
@@ -167,6 +197,30 @@ void GMemMgr::start() {
 
 void GMemMgr::stop() {
   GMemMgrImpl::instance().stop();
+}
+
+bool GMemMgr::verbose() {
+  return GMemMgrImpl::instance().verbose();
+}
+
+void GMemMgr::setVerbose(bool value) {
+  GMemMgrImpl::instance().setVerbose(value);
+}
+
+FILE* GMemMgr::err() {
+return GMemMgrImpl::instance().err();
+}
+
+void GMemMgr::setErr(FILE* value) {
+  GMemMgrImpl::instance().setErr(value);
+}
+
+FILE* GMemMgr::out() {
+  return GMemMgrImpl::instance().out();
+}
+
+void GMemMgr::setOut(FILE* value) {
+  GMemMgrImpl::instance().setOut(value);
 }
 
 void* GMemMgr::malloc(size_t size, const char* file, const int line) {

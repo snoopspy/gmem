@@ -10,7 +10,8 @@
 
 #pragma once
 
-#include <stddef.h> // size_t
+#include <stdbool.h> // bool
+#include <stdio.h> // FILE
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,6 +22,12 @@ extern "C" {
 // ----------------------------------------------------------------------------
 void gmem_start(void);
 void gmem_stop(void);
+bool gmem_verbose();
+void gmem_set_verbose(bool value);
+FILE* gmem_err();
+void gmem_set_err(FILE* value);
+FILE* gmem_out();
+void gmem_set_out(FILE* value);
 
 // ----------------------------------------------------------------------------
 // replace functions for c
