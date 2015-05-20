@@ -58,6 +58,7 @@ GMemHook& GMemHook::instance() {
   return _instance;
 }
 
+#ifdef GMEM_GLOBAL_HOOK
 // ----------------------------------------------------------------------------
 // global functions
 // ----------------------------------------------------------------------------
@@ -76,3 +77,4 @@ void* calloc(size_t nmemb, size_t size) {
 void* realloc(void* ptr, size_t size) {
   return GMemHook::instance().nowReallocFunc_(ptr, size);
 }
+#endif // GMEM_GLOBAL_HOOK
