@@ -1,4 +1,3 @@
-#include <cstdio> // fprintf
 #include <unordered_map>
 #include "gmemallocator.h"
 #include "gmemhook.h"
@@ -223,18 +222,18 @@ void GMemMgr::setOut(FILE* value) {
   GMemMgrImpl::instance().setOut(value);
 }
 
-void* GMemMgr::malloc(size_t size, const char* file, const int line) {
+void* GMemMgr::_malloc(size_t size, const char* file, const int line) {
   return GMemMgrImpl::instance().malloc(size, file, line);
 }
 
-void GMemMgr::free(void* ptr, const char* file, const int line) {
+void GMemMgr::_free(void* ptr, const char* file, const int line) {
   return GMemMgrImpl::instance().free(ptr, file, line);
 }
 
-void* GMemMgr::calloc(size_t nmemb, size_t size, const char* file, const int line) {
+void* GMemMgr::_calloc(size_t nmemb, size_t size, const char* file, const int line) {
   return GMemMgrImpl::instance().calloc(nmemb, size, file, line);
 }
 
-void* GMemMgr::realloc(void* ptr, size_t size, const char* file, const int line) {
+void* GMemMgr::_realloc(void* ptr, size_t size, const char* file, const int line) {
   return GMemMgrImpl::instance().realloc(ptr, size, file, line);
 }

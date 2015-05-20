@@ -28,8 +28,8 @@ public:
   static void setOut(FILE* value);
 
 public:
-  static void* malloc (size_t size,               const char* file, const int line);
-  static void  free   (void*  ptr,                const char* file, const int line);
-  static void* calloc (size_t nmemb, size_t size, const char* file, const int line);
-  static void* realloc(void*  ptr,   size_t size, const char* file, const int line);
+  static void* _malloc (size_t size,               const char* file, const int line);
+  static void  _free   (void*  ptr,                const char* file, const int line);
+  static void* _calloc (size_t nmemb, size_t size, const char* file, const int line);
+  static void* _realloc(void*  ptr,   size_t size, const char* file, const int line);
 };
