@@ -69,14 +69,14 @@ void* gmem_realloc(void *ptr, size_t size, const char* file, const int line) {
 // ----------------------------------------------------------------------------
 // replace operators for cpp
 // ----------------------------------------------------------------------------
-void* operator new(size_t size, const char* file, const int line) throw(std::bad_alloc) {
+void* operator new(size_t size, const char* file, const int line) throw (std::bad_alloc) {
   void* res = GMemMgr::_malloc(size, file, line);
   if (GMemMgr::verbose())
     fprintf(GMemMgr::out(), "new(%d, %s, %d) > %p\n", (int)size, file, line, res);
   return res;
 }
 
-void* operator new[](size_t size, const char* file, const int line) throw(std::bad_alloc) {
+void* operator new[](size_t size, const char* file, const int line) throw (std::bad_alloc) {
   void* res = GMemMgr::_malloc(size, file, line);
   if (GMemMgr::verbose())
     fprintf(GMemMgr::out(), "new[](%d, %s, %d) > %p\n", (int)size, file, line, res);
