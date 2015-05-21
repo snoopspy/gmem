@@ -2,7 +2,7 @@
 
 int main() {
   GMemMgr::start();
-  GMemMgr::malloc(256, __FILE__, __LINE__);
+  GMemMgr::_malloc(256, __FILE__, __LINE__);
   GMemMgr::stop();
 }
 
