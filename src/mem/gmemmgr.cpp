@@ -95,8 +95,8 @@ protected:
 public:
   GMemMgrImpl() {
     verbose_ = false;
-    out_ = stdout;
     err_ = stderr;
+    out_ = stdout;
     GMemHook::instance().hook(_malloc, _free, _calloc, _realloc);
     start();
   }
