@@ -35,13 +35,13 @@ public:
 
   void check() {
     if (items_.size() > 0) {
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
       for (Items::iterator it = items_.begin(); it != items_.end(); it++) {
         void* ptr = it->first;
         Item& item = it->second;
-        fprintf(GMemMgr::err(), "memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
+        fprintf(GMemMgr::err(), "[gmem] memory leak %p(%d bytes) %s:%d\n", ptr, (int)item.size, item.file, item.line);
       }
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
       items_.clear();
     }
   }
@@ -53,9 +53,9 @@ public:
 
   void add(void* ptr, size_t size, const char* file, const int line) {
     if (items_.find(ptr) != items_.end()) {
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
-      fprintf(GMemMgr::err(), "already exist ptr(%p) file=%s line=%d\n", ptr, file, line);
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] already exist ptr(%p) file=%s line=%d\n", ptr, file, line);
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
       return;
     }
     Item item;
@@ -68,9 +68,9 @@ public:
   void del(void* ptr, const char* file, const int line) {
     Items::iterator it = items_.find(ptr);
     if (it == items_.end()) {
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
-      fprintf(GMemMgr::err(), "can not find ptr(%p) file=%s line=%d\n", ptr, file, line);
-      fprintf(GMemMgr::err(), "******************************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
+      fprintf(GMemMgr::err(), "[gmem] can not find ptr(%p) file=%s line=%d\n", ptr, file, line);
+      fprintf(GMemMgr::err(), "[gmem] ***********************************************************************\n");
       return;
     }
     items_.erase(it);
