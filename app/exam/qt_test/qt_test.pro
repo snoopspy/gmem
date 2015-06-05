@@ -6,3 +6,4 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 include(../../../gmem.pri)
 SOURCES += main.cpp
+DESTDIR = $${PWD}/../../../bin
