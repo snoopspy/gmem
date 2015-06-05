@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <GMem>
 
-void first_test()
-{
+void first_test() {
   void *p = malloc(256);
   free(p);
 
@@ -19,8 +18,7 @@ void first_test()
 }
 
 #include <GMemCancel>
-void cancel_test()
-{
+void cancel_test() {
   void *p = malloc(256);
   free(p);
 
@@ -37,8 +35,7 @@ void cancel_test()
 }
 
 #include <GMem>
-void second_test()
-{
+void second_test() {
   void *p = malloc(256);
   free(p);
 
@@ -54,8 +51,7 @@ void second_test()
   free(p);
 }
 
-int main()
-{
+int main() {
   first_test();
   cancel_test();
   second_test();

@@ -5,22 +5,19 @@
 #pragma GCC diagnostic ignored "-Wunused-result"
 #endif // __GNUC__
 
-void malloc_test()
-{
+void malloc_test() {
   gmem_start();
   malloc(256);
   gmem_stop();
 }
 
-void calloc_test()
-{
+void calloc_test() {
   gmem_start();
   calloc(4, 256);
   gmem_stop();
 }
 
-void realloc_test()
-{
+void realloc_test() {
   void *p;
 
   gmem_start();
@@ -34,8 +31,7 @@ void realloc_test()
   gmem_stop();
 }
 
-int main()
-{
+int main() {
   malloc_test();
   calloc_test();
   realloc_test();

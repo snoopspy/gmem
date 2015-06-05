@@ -1,20 +1,17 @@
 #include <stdlib.h>
 #include <GMem>
 
-void malloc_test()
-{
+void malloc_test() {
   void* p = malloc(256);
   free(p);
 }
 
-void calloc_test()
-{
+void calloc_test() {
   void* p = calloc(2, 256);
   free(p);
 }
 
-void realloc_test()
-{
+void realloc_test() {
   void* p = malloc(256);
   p = realloc(p, 256);
   free(p);
@@ -24,8 +21,7 @@ void realloc_test()
   free(p);
 }
 
-int main()
-{
+int main() {
   malloc_test();
   calloc_test();
   realloc_test();

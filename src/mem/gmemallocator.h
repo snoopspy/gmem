@@ -14,8 +14,7 @@
 #include "gmemhook.h"
 
 template <typename T>
-struct GMemAllocator : std::allocator<T>
-{
+struct GMemAllocator : std::allocator<T> {
   GMemAllocator() {}
   template <typename U> GMemAllocator(GMemAllocator<U> const&) {}
 

@@ -1,27 +1,23 @@
 #include <GMem>
 
-void first_test()
-{
+void first_test() {
   delete new int;
   delete[] new int[256];
 }
 
 #include <GMemCancel>
-void cancel_test()
-{
+void cancel_test() {
   delete new int;
   delete[] new int[256];
 }
 
 #include <GMem>
-void second_test()
-{
+void second_test() {
   delete new int;
   delete[] new int[256];
 }
 
-int main()
-{
+int main() {
   first_test();
   cancel_test();
   second_test();

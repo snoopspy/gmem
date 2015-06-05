@@ -1,11 +1,9 @@
 #include <stdlib.h>
 #include <GMem>
 
-int main()
-{
+int main() {
   gmem_set_verbose(true);
-  gmem_set_err(stdout);
-  malloc(256);
+  malloc(256); // memory leak
   int* p = new int;
   delete p;
   return 0;
