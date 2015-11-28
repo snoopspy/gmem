@@ -164,8 +164,8 @@ public:
   }
 
   void free(void* ptr, const char* file, const int line) {
-    GMemHook::instance().orgFreeFunc_(ptr);
     memLeak_.del(ptr, file, line);
+    GMemHook::instance().orgFreeFunc_(ptr);
   }
 
   void* calloc(size_t nmemb, size_t size, const char* file, const int line) {
