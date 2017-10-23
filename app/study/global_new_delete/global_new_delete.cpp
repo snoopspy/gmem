@@ -1,4 +1,3 @@
-#include <new>      // std::bad_alloc
 #include <stddef.h> // size_t
 #include <stdio.h>  // printf
 #include <stdlib.h> // malloc
