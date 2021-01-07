@@ -2,10 +2,10 @@ G Memory Leak Detect Library
 ================
 
 # Install
-  * For Qt user
-    * Include **gmem.pri** in your project file(*.pro).
-  * For none Qt user
-    * Add all files in src folder in your project.
+* For Qt user
+  * Include **gmem.pri** in your project file(*.pro).
+* For none Qt user
+  * Add all files in src folder in your project.
 
 # Use
 
@@ -30,7 +30,7 @@ void foo()
 ```cpp
 #include "gmem.h"
 
-int main()
+void foo()
 {
   gmem_start();
   ...
@@ -63,7 +63,7 @@ int main()
 ```cpp
 #include "gmem.h"
 
-int main()
+void foo()
 {
   gmem_set_verbose(true);
   ...
@@ -72,7 +72,7 @@ int main()
 ```
 # Example
 
-  * Run the [source code](app/exam/cpp-leak-test/cpp-leak-test.cpp) and you will get the following result.
+  * Run [cpp-leak-test.cpp](app/exam/cpp-leak-test/cpp-leak-test.cpp) and you will get the following result.
 
 ```
 # ./cpp-leak-test
