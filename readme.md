@@ -1,4 +1,4 @@
-G Memory Library
+G Memory Leak Detect Library
 ================
 
 # Install
@@ -9,27 +9,9 @@ G Memory Library
 
 # Use
 
-  * Include **gmem.h**.
-  * Call **gmem_start()** to start memory leak detection and call **gmem_stop()** to stop memory leak detection.
+* Just simple. Include **gmem.h** before malloc, free, calloc, realloc, new and delete are used.
 
 ```cpp
-[main.cpp]
-
-#include "gmem.h"
-
-int main()
-{
-  gmem_start();
-  ...
-  gmem_stop();
-}
-```
-
-  * Include **gmem.h** before malloc, freem calloc, realloc, new and delete are used.
-
-```cpp
-[test.cpp]
-
 #include "gmem.h"
 
 void foo()
@@ -43,11 +25,22 @@ void foo()
 }
 ```
 
-  * If compiler error occurs where other header file is included, include **gmemcancel.h** before the header file.
+* To detect memory leak in a specific code, Call **gmem_start()** to start memory leak detection and call **gmem_stop()** to stop memory leak detection.
 
 ```cpp
-[cancel.cpp]
+#include "gmem.h"
 
+int main()
+{
+  gmem_start();
+  ...
+  gmem_stop();
+}
+```
+
+* If compiler error occurs where other header file is included, include **gmemcancel.h** before the header file.
+
+```cpp
 #include "gmem.h"
 ...
 ... memory leak detection
@@ -65,6 +58,18 @@ void foo()
 ...
 ```
 
+* You can trace memory allocation and deallocation calling "gmem_set_verbose(true)".
+
+```cpp
+#include "gmem.h"
+
+int main()
+{
+  gmem_set_verbose(true);
+  ...
+  gmem_set_verbose(false);
+}
+```
 # Example
 
   * Run the [source code](app/exam/cpp-leak-test/cpp-leak-test.cpp) and you will get the following result.
