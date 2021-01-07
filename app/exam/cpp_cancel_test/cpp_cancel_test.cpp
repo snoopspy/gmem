@@ -1,17 +1,17 @@
-#include <GMem>
+#include "gmem.h"
 
 void first_test() {
   delete new int;
   delete[] new int[256];
 }
 
-#include <GMemCancel>
+#include "gmemcancel.h"
 void cancel_test() {
   delete new int;
   delete[] new int[256];
 }
 
-#include <GMem>
+#include "gmem.h"
 void second_test() {
   delete new int;
   delete[] new int[256];

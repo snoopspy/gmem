@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
-#include <GMemHook>
+#include "gmemhook.h"
 
 void* _malloc(size_t size) {
   void* res = GMemHook::instance().orgMallocFunc_(size);

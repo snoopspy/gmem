@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <GMem>
+#include "gmem.h"
 
 void malloc_test() {
   void* p = malloc(256);

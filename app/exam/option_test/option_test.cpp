@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <GMem>
+#include "gmem.h"
 
 int main() {
   gmem_set_verbose(true);

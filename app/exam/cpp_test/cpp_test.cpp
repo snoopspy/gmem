@@ -1,4 +1,4 @@
-#include <GMem>
+#include "gmem.h"
 
 void new_test() {
   int* p = new int;

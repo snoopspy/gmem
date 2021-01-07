@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <GMem>
+#include "gmem.h"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-result"

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <GMem>
+#include "gmem.h"
 
 void first_test() {
   void *p = malloc(256);
@@ -17,7 +17,7 @@ void first_test() {
   free(p);
 }
 
-#include <GMemCancel>
+#include "gmemcancel.h"
 void cancel_test() {
   void *p = malloc(256);
   free(p);
@@ -34,7 +34,7 @@ void cancel_test() {
   free(p);
 }
 
-#include <GMem>
+#include "gmem.h"
 void second_test() {
   void *p = malloc(256);
   free(p);
