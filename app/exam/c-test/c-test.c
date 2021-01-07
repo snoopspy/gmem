@@ -25,5 +25,4 @@ int main() {
   malloc_test();
   calloc_test();
   realloc_test();
-  return 0;
 }

@@ -6,5 +6,4 @@ int main() {
   malloc(256); // memory leak
   int* p = new int;
   delete p;
-  return 0;
 }

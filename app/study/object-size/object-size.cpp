@@ -38,6 +38,4 @@ int main() {
 
   delete new VObj_dtor;       // 24
   delete[] new VObj_dtor[10]; // 248
-
-  return 0;
 }

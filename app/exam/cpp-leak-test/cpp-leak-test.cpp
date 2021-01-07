@@ -15,5 +15,4 @@ void new_arr_test() {
 int main() {
   new_test();
   new_arr_test();
-  return 0;
 }

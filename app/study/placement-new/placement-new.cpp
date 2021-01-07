@@ -32,6 +32,4 @@ int main() {
   new Obj;                     // (A)
   new(__FILE__) Obj;           // (B)
   new(__FILE__, __LINE__) Obj; // (C)
-
-  return 0;
 }

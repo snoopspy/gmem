@@ -34,6 +34,4 @@ int main() {
   Obj* obj2 = new Obj;                            // (B)
   obj2->~Obj();                                   // (A)
   Obj::operator delete(obj2, __FILE__, __LINE__); // (D)
-
-  return 0;
 }

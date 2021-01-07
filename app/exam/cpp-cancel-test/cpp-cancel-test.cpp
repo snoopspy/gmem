@@ -21,5 +21,4 @@ int main() {
   first_test();
   cancel_test();
   second_test();
-  return 0;
 }
