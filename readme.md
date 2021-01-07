@@ -9,13 +9,13 @@ G Memory Library
 
 # Use
 
-  * Include **GMem**.
+  * Include **gmem.h**.
   * Call **gmem_start()** to start memory leak detection and call **gmem_stop()** to stop memory leak detection.
 
 ```cpp
 [main.cpp]
 
-#include <GMem>
+#include "gmem.h"
 
 int main()
 {
@@ -25,12 +25,12 @@ int main()
 }
 ```
 
-  * Include **Gem** before malloc, freem calloc, realloc, new and delete are used.
+  * Include **gmem.h** before malloc, freem calloc, realloc, new and delete are used.
 
 ```cpp
 [test.cpp]
 
-#include <GMem>
+#include "gmem.h"
 
 void foo()
 {
@@ -43,23 +43,23 @@ void foo()
 }
 ```
 
-  * If compiler error occurs where other header file is included, include **GMemCancel** before the header file.
+  * If compiler error occurs where other header file is included, include **gmemcancel.h** before the header file.
 
 ```cpp
 [cancel.cpp]
 
-#include <GMem>
+#include "gmem.h"
 ...
 ... memory leak detection
 ...
 
-#include <GMemCancel>
+#include "gmemcancel.h"
 #include <list>
 ...
 ... no memory leak detection
 ...
 
-#include <GMem>
+#include "gmem.h"
 ...
 ... memory leak detection
 ...
@@ -67,19 +67,19 @@ void foo()
 
 # Example
 
-  * Run the [source code](app/exam/cpp_leak_test/cpp_leak_test.cpp) and you will get the following result.
+  * Run the [source code](app/exam/cpp-leak-test/cpp-leak-test.cpp) and you will get the following result.
 
 ```
-# ./cpp_leak_test
+# ./cpp-leak-test
 [gmem] ***********************************************************************
-[gmem] memory leak 0xe7d070(4 bytes) cpp_leak_test.cpp:6
+[gmem] memory leak 0x5608e7b87eb0(4 bytes) cpp-leak-test.cpp:5
 [gmem] ***********************************************************************
 [gmem] ***********************************************************************
-[gmem] memory leak 0xe7d090(1024 bytes) cpp_leak_test.cpp:13
+[gmem] memory leak 0x5608e7b87f70(1024 bytes) cpp-leak-test.cpp:11
 [gmem] ***********************************************************************
 #
 ```
 
 # Supported Platforms
-  * Linux / g++ 4.8.2
-  * Windows / mingw 4.9.1
+  * Linux / g++ 4.8.2 or higher
+  * Windows / mingw 4.9.1 or higher
