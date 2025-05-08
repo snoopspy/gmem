@@ -10,4 +10,5 @@ SUBDIRS += \
 	malloc-test \
 	mgr-test \
 	option-test \
-	qt-test
+	qt-test \
+	stl-test
