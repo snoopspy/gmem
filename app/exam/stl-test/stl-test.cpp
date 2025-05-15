@@ -32,8 +32,7 @@ void vector_test() {
 	v.push_back(10);
 
 	for (vector<uint64_t>::iterator it = v.begin(); it != v.end(); it++)
-		printf("%ld ", *it);
-	printf("\n");
+		printf("%ld\n", *it);
 }
 
 void list_test() {
@@ -50,8 +49,7 @@ void list_test() {
 	l.push_back(10);
 
 	for (list<uint64_t>::iterator it = l.begin(); it != l.end(); it++)
-		printf("%ld ", *it);
-	printf("\n");
+		printf("%ld\n", *it);
 }
 
 void set_test() {
@@ -62,8 +60,7 @@ void set_test() {
 	s.insert(4);
 
 	for (set<uint64_t>::iterator it = s.begin(); it != s.end(); it++)
-		printf("%ld ", *it);
-	printf("\n");
+		printf("%ld\n", *it);
 }
 
 void map_test() {
@@ -74,8 +71,7 @@ void map_test() {
 	m.insert({4, 400});
 
 	for (map<uint64_t, uint64_t>::iterator it = m.begin(); it != m.end(); it++)
-		printf("%ld %ld", it->first, it->second);
-	printf("\n");
+		printf("%ld %ld\n", it->first, it->second);
 }
 
 void unordered_set_test() {
@@ -102,8 +98,7 @@ void unordered_set_test() {
 	us.insert(20);
 
 	for (unordered_set<uint64_t>::iterator it = us.begin(); it != us.end(); it++)
-		printf("%ld ", *it);
-	printf("\n");
+		printf("%ld\n", *it);
 }
 
 void unordered_map_test() {
@@ -130,8 +125,7 @@ void unordered_map_test() {
 	um.insert({20, 2000});
 
 	for (unordered_map<uint64_t, uint64_t>::iterator it = um.begin(); it != um.end(); it++)
-		printf("%ld %ld", it->first, it->second);
-	printf("\n");
+		printf("%ld %ld\n", it->first, it->second);
 }
 
 int main() {
