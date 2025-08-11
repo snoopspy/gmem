@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstdlib>
 #include <cstdio>
 #include <list>
 #include <map>
@@ -129,14 +130,15 @@ void unordered_map_test() {
 }
 
 int main() {
-	//malloc_test();
-	//new_test();
-
 	gmem_set_verbose(true);
-	//vector_test();
-	//list_test();
-	//set_test();
-	//map_test();
-	//unordered_set_test();
-	//unordered_map_test();
+
+	// malloc_test();
+	// new_test();
+
+	// vector_test();
+	// list_test();
+	// set_test();
+	// map_test();
+	// unordered_set_test();
+	// unordered_map_test();
 }
